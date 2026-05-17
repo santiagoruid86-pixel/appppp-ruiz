@@ -1,46 +1,97 @@
-# Ruiz Assistant para Android
+# Ruiz - Asistente de voz
 
-Esta carpeta contiene el proyecto Kivy para crear una versión de Ruiz que funcione en tu celular Android.
+Este proyecto crea un asistente de voz activado por la frase "ey ruiz". El asistente responde con voz y puede ejecutar comandos básicos en Windows. Además, incluye funciones para controlar un teléfono Android conectado mediante ADB.
 
-## Archivos principales
+## Características
 
-- `main.py` — código de la aplicación Android.
-- `buildozer.spec` — configuración para generar el APK.
+- Detección de la frase de activación: "ey ruiz"
+- Respuestas habladas con voz de asistente
+- Comandos básicos:
+  - "¿Qué hora es?"
+  - "abre YouTube"
+  - "busca <algo>"
+  - "llama a <número>" (requiere teléfono Android conectado y `adb`)
+  - "abre WhatsApp" en el teléfono Android conectado
+- Ejecución como aplicación descargable con PyInstaller
 
-## Cómo construir la APK
+## Requisitos
 
-### Opción recomendada: Linux / WSL
+- Windows 10 o 11
+- Python 3.9+
+- Micrófono
+- Opcional: teléfono Android con USB debugging habilitado y `adb`
 
-1. Instala Buildozer y dependencias en Linux o WSL.
-2. Abre terminal en `android_app`.
-3. Ejecuta:
-   ```bash
-   buildozer android debug
-   ```
-4. El APK se generará en `bin/`.
+## Instalación
 
-### Si no tienes Linux
+1. Abre PowerShell en la carpeta del proyecto.
+2. Instala las dependencias:
 
-Puedes usar WSL en Windows:
+```powershell
+python -m pip install -r requirements.txt
+python -m pip install pipwin
+python -m pipwin install pyaudio
+```
 
-1. Instala WSL y una distribución Linux.
-2. Copia el proyecto a WSL o monta la carpeta.
-3. Instala `buildozer` y `python3` en Linux.
-4. Ejecuta `buildozer android debug`.
+3. Si vas a controlar un teléfono Android, instala `adb` y conéctalo al equipo.
 
-## Cómo usar en el celular
+## Uso
 
-1. Copia el APK generado a tu teléfono.
-2. Activa la instalación de aplicaciones de fuentes desconocidas.
-3. Instala el APK.
-4. Abre la app y pulsa en "Escuchar".
-5. Di "ey ruiz" seguido del comando.
+```powershell
+python Ruiz.py
+```
 
-## Comandos disponibles
+Di "ey ruiz" y luego el comando.
 
-- "ey ruiz, ¿qué hora es?"
-- "ey ruiz, abre YouTube"
-- "ey ruiz, abre WhatsApp"
-- "ey ruiz, busca <algo>"
-- "ey ruiz, llama a <número>"
-- "ey ruiz, envía mensaje a <número>"
+## Crear archivo ejecutable
+
+Instala PyInstaller:
+
+```powershell
+python -m pip install pyinstaller
+```
+
+Genera el ejecutable:
+
+```powershell
+python -m pyinstaller --onefile --noconsole Ruiz.py
+```
+
+El ejecutable estará en `dist\Ruiz.exe`.
+
+## App Android
+
+Si quieres una versión para instalar en tu celular Android, en la carpeta `android_app/` hay un proyecto Kivy listo para generar un APK.
+
+- `android_app/main.py` contiene el código de la app.
+- `android_app/buildozer.spec` contiene la configuración para Buildozer.
+- `android_app/README.md` explica cómo crear la APK y probarla en el teléfono.
+
+> Nota: crear el APK en Windows requiere usar WSL o un entorno Linux con Buildozer.
+
+## Subir el proyecto a GitHub
+
+1) Crea un repositorio nuevo en GitHub.
+2) En tu carpeta `app_celular`, ejecuta:
+
+```powershell
+cd c:\Users\Kiara\Downloads\app_celular
+git init
+git add .
+git commit -m "Añadir Ruiz asistente y proyecto Android"
+git branch -M main
+git remote add origin https://github.com/TU_USUARIO/NOMBRE_DEL_REPO.git
+git push -u origin main
+```
+
+3) Reemplaza `TU_USUARIO` y `NOMBRE_DEL_REPO` por los tuyos.
+
+### Qué subir a GitHub
+
+- El código `Ruiz.py`
+- La carpeta `android_app/` con `main.py` y `buildozer.spec`
+- `README.md` y `requirements.txt`
+- `.gitignore` para no subir archivos temporales
+
+## Importante
+
+Subirlo a GitHub te permite compartir el proyecto, pero no convierte el código automáticamente en una app instalable. Si quieres, también puedo decirte cómo crear un release con el APK una vez generado.
